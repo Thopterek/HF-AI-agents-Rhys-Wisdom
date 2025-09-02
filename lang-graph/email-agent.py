@@ -186,3 +186,69 @@ email_graph.add_edge("notify_mr_hugg", END)
 # compile the graph
 compiled_graph = email_graph.compile()
 
+# ---------------------------------------
+# Running the application with test email
+# ---------------------------------------
+legit_email = {
+        "sender": "john.smith@something.com",
+        "subject": "Question about your service",
+        "body": "Dear Mr Hugg I would like to talk about possible cooperation"
+        }
+
+spam_email = {
+        "sender": "asdada@lotter.com",
+        "subject": "YOU WON THE LOTTER",
+        "body": "Click the link and receive you price right now! Don't wait till it dissapears"
+        }
+
+# processing of the emails:
+print("\nProcessing the legit email")
+legit_result = compiled_graph.invoke({
+    "email": legit_email,
+    "is_spam": None,
+    "spam_reason": None,
+    "email_category": None,
+    "email_draft": None,
+    "messages": []
+    })
+
+print("\nProcessing the spam email")
+spam_result = compiled_graph.invoke({
+    "email": spam_email,
+    "is_spam": None,
+    "spam_reason": None,
+    "email_category": None,
+    "email_draft": None,
+    "messages": []
+    })
+
+# --------------------------------------
+# Inspeciting the Workflow with Langfuse
+# below configuration depends on:
+# %pip install -q langfuse
+# %pip install langchain
+# getting the keys from project settings
+# and the Langfuse callback handler
+# --------------------------------------
+from langfuse.langchain import CallbackHandler
+import os
+
+os.environ["LANGFUSE_PUBLIC_KEY"] = "pk-some-actual-public-key"
+os.environ["LANGFUSE_SECRET_KEY"] = "sk-and-the-secret-key"
+os.environ["LANGFUSE_HOST"] = "https://cloud.langfuse.com"
+
+langfuse_handler = CallbackHandler()
+
+# processing the legit email
+legit_result = compiled_graph.invoke(
+        input={"email": legit_email,
+        "is_spam": None,
+        "spam_reason": None,
+        "email_category": None,
+        "draft_response": None,
+        "messages": []},
+        config={"callbacks": [langfuse_handler]}
+        )
+# now visualize the graph
+compiled_graph.get_graph().draw_mermaid_png()
+
