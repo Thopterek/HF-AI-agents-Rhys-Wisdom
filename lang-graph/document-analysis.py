@@ -154,4 +154,17 @@ messages = react_graph.invoke({
 
 # show the msgs
 for m in messages['messages']:
-    m.pre
+    m.pretty_print()
+
+messages = [HumanMessage(content="According to note in the images what equipment should I prepare")]
+messages = react_graph.invoke({
+    "messages": messages,
+    "input_file": "Warhammer_adventure_prep.png"
+    })
+# --------------------------
+# Takeaway for another agent
+# 1. Define clear tools
+# 2. Robust state tracker
+# 3. Error handling
+# 4. Contextual awarness
+# --------------------------
