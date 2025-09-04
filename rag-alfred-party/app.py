@@ -8,7 +8,7 @@ from smolagents import CodeAgent, InferenceClientModel
 # importing entire modules with the code
 # and then changing to be only things needed
 from retriever import GuestInfoRetrievalTool
-from tools import docs
+from tools import docs, GuestMemory
 import os
 
 # Initialize the HF model
