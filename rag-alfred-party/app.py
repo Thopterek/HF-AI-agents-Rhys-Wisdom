@@ -3,11 +3,15 @@
 # --------------------------------
 from smolagents import CodeAgent, InferenceClientModel
 # importing entire modules with the code
-import retriever, tools
+# and then changing to be only things needed
+from retriever import GuestInfoRetrievalTool
+from tools import docs
 
 # Initialize the HF model
 model = InferenceClientModel()
 
+# intiialize the tools and documents
+guest_info_tool = GuestInfoRetrievalTool(docs)
 # Alfred our gala agent with guest info tool
 alfred = CodeAgent(tools=[guest_info_tool], model=model)
 
