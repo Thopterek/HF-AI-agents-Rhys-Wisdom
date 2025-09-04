@@ -52,7 +52,7 @@ class GuestInfoRetrieverTool(Tool):
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
         doc_chunks = text_splitter.split_documents(docs)
         # creation of the embedding and making a vectore store
-        emeddings = LangChainEmbeddings(self.embedding_model)
+        embeddings = LangChainEmbeddings(self.embedding_model)
         self.vectorstore = Chroma.from_documents(
                 documents=doc_chunks,
                 embedding=embeddings,
@@ -64,7 +64,10 @@ class GuestInfoRetrieverTool(Tool):
                 )
 
     def forward(self, query: str):
-        results = self.retriever.get_relevant_documents(query)
+        # old method
+        # results = self.retriever.get_relevant_documents(query)
+        # and the new one overhere
+        results = self.retriever.invoke(query)
         if results:
             # -----------------------------------
             # small replacment no need for top :3
