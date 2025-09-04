@@ -24,7 +24,9 @@ alfred = CodeAgent(
         You are Alfred, the helpful assistant for high profile Gala.
         Use the guest_info_retriever tool to look up the informations about guests.
         Always be polite and try your best to be as truthful as possible.
-        """)
+        """,
+        remember=True # Just to so he adds the prior prompts to his knowledge
+        )
 
 # Example query for Alfred
 response = alfred.run("Tell me about our guest Lady Ada Lovelace.")
