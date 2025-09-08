@@ -2,6 +2,7 @@
 # The first example on how to connect to the Llama llama_index
 # depends on the following:
 # pip install llama-index-llms-huggingface-api llama-index-embeddings-huggingface
+# testing the connection
 # ------------------------------------------------------------------
 from llama_index.llms.huggingface_api import HuggingFaceInferenceAPI
 import os
